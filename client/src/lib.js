@@ -1,0 +1,2 @@
+export const API=import.meta.env.VITE_API_URL||'http://localhost:4000/api';
+export async function api(path,options={}){const isForm=options.body instanceof FormData;const response=await fetch(`${API}${path}`,{credentials:'include',...options,headers:{...(isForm?{}:{'Content-Type':'application/json'}),...options.headers}});const data=response.headers.get('content-type')?.includes('application/json')?await response.json():null;if(!response.ok)throw new Error(data?.error||'Request failed. Please try again.');return data;}
